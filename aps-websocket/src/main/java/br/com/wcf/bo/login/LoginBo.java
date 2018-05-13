@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.wcf.bo.DefaultBo;
 import br.com.wcf.config.UsersSession;
 import br.com.wcf.jpa.repository.ProjetoRepository;
 import br.com.wcf.jpa.repository.UsuarioRepository;
@@ -16,7 +17,7 @@ import br.com.wcf.model.messages.login.LoginRestMessage;
 import br.com.wcf.model.user.UsuarioModel;
 
 @Component
-public class LoginBo {
+public class LoginBo extends DefaultBo {
 
 	@Autowired
 	private UsersSession session;
@@ -24,10 +25,6 @@ public class LoginBo {
 	private UsuarioRepository dao;
 	@Autowired
 	private ProjetoRepository pDao;
-
-	private DefaultRestMessage unauthorized() {
-		return new DefaultRestMessage(DefaultRestMessageStatus.UNAUTHORIZED);
-	}
 
 	private DefaultRestMessage accept(UsuarioModel u) {
 		u.setSession(Base64.getEncoder().encodeToString(new Date().toString().getBytes()));

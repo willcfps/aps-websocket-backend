@@ -2,6 +2,7 @@ package br.com.wcf.model.user.inspector;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class InspetorModel implements Serializable {
 	private Integer id;
 	private String name;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private UsuarioModel user;
 
 	public Integer getId() {

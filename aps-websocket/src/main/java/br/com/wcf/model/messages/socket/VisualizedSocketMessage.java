@@ -4,6 +4,7 @@ public class VisualizedSocketMessage {
 
 	private String user;
 	private String messageId;
+	private VisualizedSocketMessageTypeEnum type;
 
 	public String getUser() {
 		return user;
@@ -19,5 +20,13 @@ public class VisualizedSocketMessage {
 
 	public void setMessageId(String messageId) {
 		this.messageId = messageId;
+	}
+
+	public VisualizedSocketMessageTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(VisualizedSocketMessageTypeEnum type) {
+		this.type = type;
 	}
 }

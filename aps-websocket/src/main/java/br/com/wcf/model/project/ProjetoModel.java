@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +34,7 @@ public class ProjetoModel implements Serializable {
 	@JoinColumn(name = "OWNER_ID")
 	private InspetorModel owner;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "PROJECT_PARTICIPANTS", joinColumns = @JoinColumn(name = "PROJECT_ID", foreignKey = @ForeignKey(name = "FK_PROJ_PART")), inverseJoinColumns = @JoinColumn(name = "PARTICIPANT_ID", foreignKey = @ForeignKey(name = "FK_PART_PROJ")))
 	private List<InspetorModel> participants;
 	

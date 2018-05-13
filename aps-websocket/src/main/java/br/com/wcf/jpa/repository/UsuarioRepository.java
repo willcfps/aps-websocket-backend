@@ -19,6 +19,7 @@ import br.com.wcf.model.user.PerfilUsuarioModel_;
 import br.com.wcf.model.user.UsuarioModel;
 import br.com.wcf.model.user.UsuarioModel_;
 import br.com.wcf.model.user.inspector.InspetorModel;
+import br.com.wcf.model.user.inspector.InspetorModel_;
 
 @Component
 public class UsuarioRepository {
@@ -27,6 +28,31 @@ public class UsuarioRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
+
+	public List<InspetorModel> getAllInspetor() {
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<InspetorModel> query = builder.createQuery(InspetorModel.class);
+			Root<InspetorModel> root = query.from(InspetorModel.class);
+
+			TypedQuery<InspetorModel> typedQuery = manager
+					.createQuery(query.orderBy(builder.asc(root.get(InspetorModel_.id))));
+
+			return typedQuery.getResultList();
+		} catch (Exception e) {
+			LOGGER.error(" -Exception: ", e);
+			throw e;
+		}
+	}
+
+	public InspetorModel findInspetorById(Integer id) {
+		try {
+			return this.manager.find(InspetorModel.class, id);
+		} catch (Exception e) {
+			LOGGER.error(" -Exception: ", e);
+			throw e;
+		}
+	}
 
 	public List<UsuarioModel> getAllUsuarios() {
 		try {
@@ -53,7 +79,7 @@ public class UsuarioRepository {
 			throw e;
 		}
 	}
-	
+
 	public List<PerfilUsuarioModel> getAllPerfil() {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -79,7 +105,7 @@ public class UsuarioRepository {
 			throw e;
 		}
 	}
-	
+
 	@Transactional
 	public InspetorModel guardarInspetor(InspetorModel i) {
 		try {

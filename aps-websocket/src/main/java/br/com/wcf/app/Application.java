@@ -65,7 +65,7 @@ public class Application {
 			insp1 = dao.guardarInspetor(insp1);
 
 			ProjetoModel proj = new ProjetoModel();
-			proj.setDescription("Secretaria de Estado do" + 
+			proj.setDescription("Secretaria de Estado do " + 
 					"Meio Ambiente deseja saber quais atividades industriais estão gerando poluição do" + 
 					"Rio Tietê desde sua nascente em Salesópolis (SP) até a sua passagem pela região" + 
 					"da grande São Paulo.");
@@ -75,20 +75,18 @@ public class Application {
 			proj = pDao.guardarProjeto(proj);
 			
 			proj = new ProjetoModel();
-			proj.setDescription("Secretaria de Estado do" + 
-					"Meio Ambiente deseja saber quais atividades industriais estão gerando poluição do" + 
-					"Rio Tietê desde sua nascente em Salesópolis (SP) até a sua passagem pela região" + 
-					"da grande São Paulo.");
+			proj.setDescription("Secretaria de Estado do " + 
+					"Meio Ambiente deseja saber quais atividades industriais estão gerando poluição do " + 
+					"Rio Pinheiros desde sua nascente.");
 			proj.setOwner(insp1);
 			proj.getParticipants().add(insp);
 			proj.setTitle("Rio Pinheiros");
 			proj = pDao.guardarProjeto(proj);
 			
 			proj = new ProjetoModel();
-			proj.setDescription("Secretaria de Estado do" + 
-					"Meio Ambiente deseja saber quais atividades industriais estão gerando poluição do" + 
-					"Rio Tietê desde sua nascente em Salesópolis (SP) até a sua passagem pela região" + 
-					"da grande São Paulo.");
+			proj.setDescription("Secretaria de Estado do " + 
+					"Meio Ambiente deseja saber quais atividades industriais estão gerando poluição dos " + 
+					"rios do Rio de Janeiro.");
 			proj.setOwner(insp);
 			proj.getParticipants().add(insp1);
 			proj.setTitle("Rio de Janeiro");

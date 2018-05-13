@@ -30,6 +30,10 @@ public class ProjetoRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	public ProjetoModel findById(Integer id) {
+		return this.manager.find(ProjetoModel.class, id);
+	}
 
 	@Transactional
 	public ProjetoModel guardarProjeto(ProjetoModel p) {

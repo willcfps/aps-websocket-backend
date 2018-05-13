@@ -24,6 +24,10 @@ public class RestSessionInterceptor extends HandlerInterceptorAdapter implements
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		if (request.getMethod().equals("OPTIONS")) {
+			return super.preHandle(request, response, handler);
+		}
+
 		if (request.getRequestURI().equals("/api/login")) {
 			return super.preHandle(request, response, handler);
 		}
