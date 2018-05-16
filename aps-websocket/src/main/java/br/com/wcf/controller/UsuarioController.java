@@ -12,7 +12,7 @@ import br.com.wcf.model.messages.DefaultRestMessage;
 import br.com.wcf.model.user.inspector.InspetorModel;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UsuarioController {
 	
 	@Autowired
@@ -22,7 +22,7 @@ public class UsuarioController {
     public DefaultRestMessage get(@RequestParam("id") String id) {
 		
 		if (id == null || id.equals("EMPTY")) {
-			return this.bo.getAll();
+			return this.bo.getAllInspectors();
 		}
         
 		return this.bo.findById(id);
@@ -31,6 +31,11 @@ public class UsuarioController {
 	@RequestMapping(method = RequestMethod.GET, path = "/profiles")
     public DefaultRestMessage getProfiles() {
 		return this.bo.getAllProfiles();
+    }
+	
+	@RequestMapping(method = RequestMethod.GET, path = "/user")
+    public DefaultRestMessage getInspectorByIdUser(@RequestParam("id") Integer id) {
+		return this.bo.findInspectorByIdUser(id);
     }
 	
 	@RequestMapping(method = RequestMethod.POST)

@@ -34,7 +34,7 @@ public class UsuarioBo extends DefaultBo {
 		return this.defaultAllProfiles(this.dao.getAllPerfil());
 	}
 	
-	public DefaultRestMessage getAll() {
+	public DefaultRestMessage getAllInspectors() {
 		try {
 			return this.defaultAllMessage(this.dao.getAllInspetor());
 		} catch (Exception e) {
@@ -51,6 +51,19 @@ public class UsuarioBo extends DefaultBo {
 			
 			Integer aux = Integer.parseInt(id);
 			return this.defaultAllMessage(this.dao.findInspetorById(aux));
+		} catch (Exception e) {
+			return this.error();
+		}
+	}
+	
+	public DefaultRestMessage findInspectorByIdUser(Integer id) {
+		try {
+			
+			if (id == null) {
+				return this.error("ID nao informado.");
+			}
+			
+			return this.defaultAllMessage(this.dao.findInspectorByIdUser(id));
 		} catch (Exception e) {
 			return this.error();
 		}

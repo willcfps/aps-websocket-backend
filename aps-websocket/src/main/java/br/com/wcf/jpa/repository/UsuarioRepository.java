@@ -45,6 +45,22 @@ public class UsuarioRepository {
 		}
 	}
 
+	public InspetorModel findInspectorByIdUser(Integer id) {
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<InspetorModel> query = builder.createQuery(InspetorModel.class);
+			Root<InspetorModel> root = query.from(InspetorModel.class);
+
+			TypedQuery<InspetorModel> typedQuery = manager
+					.createQuery(query.where(builder.equal(root.get(InspetorModel_.user).get(UsuarioModel_.id), id)));
+
+			return typedQuery.getSingleResult();
+		} catch (Exception e) {
+			LOGGER.error(" -Exception: ", e);
+			throw e;
+		}
+	}
+
 	public InspetorModel findInspetorById(Integer id) {
 		try {
 			return this.manager.find(InspetorModel.class, id);

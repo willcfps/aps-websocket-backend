@@ -21,6 +21,7 @@ import br.com.wcf.model.messages.login.LoginProjectsRestMessage;
 import br.com.wcf.model.project.ProjetoModel;
 import br.com.wcf.model.project.ProjetoModel_;
 import br.com.wcf.model.user.UsuarioModel;
+import br.com.wcf.model.user.UsuarioModel_;
 import br.com.wcf.model.user.inspector.InspetorModel;
 import br.com.wcf.model.user.inspector.InspetorModel_;
 
@@ -30,7 +31,7 @@ public class ProjetoRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	public ProjetoModel findById(Integer id) {
 		return this.manager.find(ProjetoModel.class, id);
 	}
@@ -42,6 +43,36 @@ public class ProjetoRepository {
 		} catch (Exception e) {
 			LOGGER.error(" -Exception: ", e);
 			return null;
+		}
+	}
+	
+	public List<ProjetoModel> getAllByIdUserInspectorOwner(Integer id) {
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<ProjetoModel> query = builder.createQuery(ProjetoModel.class);
+			Root<ProjetoModel> from = query.from(ProjetoModel.class);
+
+			Predicate where = builder.equal(from.get(ProjetoModel_.owner).get(InspetorModel_.user).get(UsuarioModel_.id), id);
+
+			return manager.createQuery(query.where(where)).getResultList();
+		} catch (Exception e) {
+			LOGGER.error(" -Exception: ", e);
+			return new ArrayList<>();
+		}
+	}
+
+	public List<ProjetoModel> getAllByIdInspectorOwner(Integer id) {
+		try {
+			CriteriaBuilder builder = manager.getCriteriaBuilder();
+			CriteriaQuery<ProjetoModel> query = builder.createQuery(ProjetoModel.class);
+			Root<ProjetoModel> from = query.from(ProjetoModel.class);
+
+			Predicate where = builder.equal(from.get(ProjetoModel_.owner).get(InspetorModel_.id), id);
+
+			return manager.createQuery(query.where(where)).getResultList();
+		} catch (Exception e) {
+			LOGGER.error(" -Exception: ", e);
+			return new ArrayList<>();
 		}
 	}
 
@@ -80,7 +111,7 @@ public class ProjetoRepository {
 			return new ArrayList<>();
 		}
 	}
-	
+
 	public List<LoginProjectsRestMessage> getAllInpectorParticipant(InspetorModel u) {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -99,18 +130,19 @@ public class ProjetoRepository {
 			return new ArrayList<>();
 		}
 	}
-	
+
 	public List<LoginProjectsRestMessage> getAllInpectorParticipant(UsuarioModel u) {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
 			CriteriaQuery<LoginProjectsRestMessage> query = builder.createQuery(LoginProjectsRestMessage.class);
 			Root<ProjetoModel> from = query.from(ProjetoModel.class);
 			Join<ProjetoModel, InspetorModel> pJoin = from.join(ProjetoModel_.participants);
-			
+
 			Subquery<Integer> sub = query.subquery(Integer.class);
 			Root<InspetorModel> sRoot = sub.from(InspetorModel.class);
-			sub.select(sRoot.get(InspetorModel_.id)).where(builder.equal(sRoot.get(InspetorModel_.user), u)).distinct(true);
-			
+			sub.select(sRoot.get(InspetorModel_.id)).where(builder.equal(sRoot.get(InspetorModel_.user), u))
+					.distinct(true);
+
 			Predicate where = builder.equal(pJoin.get(InspetorModel_.id), sub);
 
 			query.select(builder.construct(LoginProjectsRestMessage.class, from.get(ProjetoModel_.id),
