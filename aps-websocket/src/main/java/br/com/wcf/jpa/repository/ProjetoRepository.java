@@ -32,10 +32,22 @@ public class ProjetoRepository {
 	@PersistenceContext
 	private EntityManager manager;
 
+	/**
+	 * Busca um projeto com base na chave primaria.
+	 * 
+	 * @param id - chaves primaria
+	 * @return
+	 */
 	public ProjetoModel findById(Integer id) {
 		return this.manager.find(ProjetoModel.class, id);
 	}
 
+	/**
+	 * Persiste uma nova entidade na base de dados ou atualiza os dados de uma entidade existente.
+	 * 
+	 * @param p
+	 * @return
+	 */
 	@Transactional
 	public ProjetoModel guardarProjeto(ProjetoModel p) {
 		try {
@@ -46,6 +58,12 @@ public class ProjetoRepository {
 		}
 	}
 	
+	/**
+	 * Busca todos os projetos de um inspetor pelo id do usuario.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public List<ProjetoModel> getAllByIdUserInspectorOwner(Integer id) {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -61,6 +79,12 @@ public class ProjetoRepository {
 		}
 	}
 
+	/**
+	 * Busca todos os projetos de um inspetor pelo id do inspetor.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public List<ProjetoModel> getAllByIdInspectorOwner(Integer id) {
 		try {
 			CriteriaBuilder builder = manager.getCriteriaBuilder();
